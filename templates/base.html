@@ -1,0 +1,161 @@
+{% load i18n static %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
+
+<head>
+    <title>{% trans 'IMDB' %} | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static "core_st/bootstrap.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "core_st/base.css" %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {#<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">#}
+
+    {% if not is_popup and is_nav_sidebar_enabled %}
+        {#  <link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">#}
+        {#  <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>#}
+    {% endif %}
+
+    {% block extrastyle %}{% endblock %}
+
+    {% if LANGUAGE_BIDI %}
+        <link rel="stylesheet" type="text/css"
+              href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
+
+    {% block extrahead %}{% endblock %}
+
+    {% block responsive %}
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive.css" %}">
+        {% if LANGUAGE_BIDI %}
+            <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
+    {% endblock %}
+
+    {% block blockbots %}
+        <meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+      data-admin-utc-offset="{% now "Z" %}" style="font-size:24px;" onload={% block onload %}""{% endblock %}>
+
+<!-- Container -->
+<div>
+    <header>
+        <nav>
+            <div class="menu-icon">
+                <i class="fa fa-bars"></i>
+            </div>
+
+            <div class="logo">{% trans 'IMDB' %}</div>
+
+            <div class="nav-items">
+                <li><a href="{% url 'customer:baseview' %}">{% trans 'Home' %}</a></li>
+{#                <li class="dropdown"><a href="{% url 'product:product_index_view' %}">{% trans 'Categories' %}</a>#}
+{#                    <ul class="sub-menu">#}
+{#                        <li><a href="{% url 'product:product_men_view' %}">{% trans 'Men' %}</a></li>#}
+{#                        <li><a href="{% url 'product:product_women_view' %}">{% trans 'Women' %}</a></li>#}
+{#                        <li><a href="{% url 'product:product_children_view' %}">{% trans 'Children' %}</a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+                <li><a href="#">{% trans 'About' %}</a></li>
+                <li><a href="#">{% trans 'Contact' %}</a></li>
+                {% if not user.email %}<li><a href="{% url 'customer:login' %}">{% trans 'Login' %}</a></li>
+                {% else %}<li><a href="{% url 'customer:logout' %}">{{ user.email }}|{% trans 'Logout' %}</a></li>
+                {% endif %}
+            </div>
+
+            <div class="search-icon">
+                <i class="fa fa-search"></i>
+            </div>
+
+            <div class="cancel-icon">
+                <i class="fa fa-times"></i>
+            </div>
+
+{#            <form action="{% url 'product:search_result' %}" method="get">#}
+{#                <input type="search" name="search" class="search-data" placeholder="Search" required>#}
+{#                <button type="submit"><i class="fa fa-search"></i></button>#}
+{#            </form>#}
+
+
+        </nav>
+    </header>
+
+
+    <div class="container">
+
+        {% block section1 %}
+        {% endblock %}
+
+        {% block section2 %}
+        {% endblock %}
+
+        {% block section3 %}
+        {% endblock %}
+
+
+    </div>
+
+
+    <footer>
+        <div class="footer-content">
+            <h3>{% trans 'IMDB' %}</h3>
+            <p>{% trans "IMDb is an online database of information related to films, television programs, home videos, video games, and streaming content online – including cast, production crew and personal biographies, plot summaries, trivia, ratings, and fan and critical reviews." %}</p>
+            <ul class="socials">
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa fa-telegram"></i></a></li>
+                <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                <li><a href="#"><i class="fa fa-youtube-square"></i></a></li>
+            </ul>
+            <div class="footer-bottom">
+                <p>copyright &copy;2021 IMDB. designed by <span><a href="https://github.com/smhtbtb">smhtb</a></span></p>
+            </div>
+        </div>
+    </footer>
+
+
+</div>
+<!-- END Container -->
+
+
+<script>
+    const menuBtn = document.querySelector(".menu-icon i")
+    const searchBtn = document.querySelector(".search-icon")
+    const cancelBtn = document.querySelector(".cancel-icon")
+    const items = document.querySelector(".nav-items")
+    const form = document.querySelector("form")
+    menuBtn.onclick = () => {
+        items.classList.add("active")
+        menuBtn.classList.add("hide")
+        searchBtn.classList.add("hide")
+        cancelBtn.classList.add("show")
+    }
+    cancelBtn.onclick = () => {
+        items.classList.remove("active")
+        menuBtn.classList.remove("hide")
+        searchBtn.classList.remove("hide")
+        cancelBtn.classList.remove("show")
+        form.classList.remove("active")
+    }
+    searchBtn.onclick = () => {
+        searchBtn.classList.add("hide")
+        cancelBtn.classList.add("show")
+        form.classList.add("active")
+    }
+
+
+    $(document).ready(function (){
+        $(".dropdown").click(function (){
+            $(this).toggleClass("active")
+        })
+    })
+
+
+</script>
+{% block extrascript %}{% endblock %}
+</body>
+</html>
