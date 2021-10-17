@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Search Result' %}{% endblock %}
+{% block extrahead %}
+{% endblock %}
+
+<div class="s1">
+    <center>
+        {% block section1 %}
+            {% block slide %}{% endblock %}
+
+            <div class="row">
+                {% for movie in search_results %}
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" style="margin: 0; align-content: center; text-align: center">
+                        <a href="{% url 'movies:movie_detail' movie.id %}">{% include 'movie_temp/movie_card_view.html' with movie=movie %}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endblock %}
+    </center>
+</div>

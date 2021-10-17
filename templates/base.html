@@ -8,8 +8,6 @@
     <link rel="stylesheet" type="text/css" href="{% static "core_st/bootstrap.min.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "core_st/base.css" %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    {#<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">#}
 
     {% if not is_popup and is_nav_sidebar_enabled %}
         {#  <link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">#}
@@ -60,8 +58,7 @@
 {#                        <li><a href="{% url 'product:product_children_view' %}">{% trans 'Children' %}</a></li>#}
 {#                    </ul>#}
 {#                </li>#}
-                <li><a href="#">{% trans 'About' %}</a></li>
-                <li><a href="#">{% trans 'Contact' %}</a></li>
+                <li><a href="{% url 'movies:movie_index_view' %}">{% trans 'Movies' %}</a></li>
                 {% if not user.email %}<li><a href="{% url 'customer:login' %}">{% trans 'Login' %}</a></li>
                 {% else %}<li><a href="{% url 'customer:logout' %}">{{ user.email }}|{% trans 'Logout' %}</a></li>
                 {% endif %}
@@ -75,10 +72,10 @@
                 <i class="fa fa-times"></i>
             </div>
 
-{#            <form action="{% url 'product:search_result' %}" method="get">#}
-{#                <input type="search" name="search" class="search-data" placeholder="Search" required>#}
-{#                <button type="submit"><i class="fa fa-search"></i></button>#}
-{#            </form>#}
+            <form action="{% url 'movies:search_result' %}" method="get">
+                <input type="search" name="search" class="search-data" placeholder="Search" required>
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
 
 
         </nav>

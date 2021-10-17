@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans 'Product detail' %}{% endblock %}
+
+{% block extrahead %}
+{#    <script src={% static 'product_st/product_detail.js' %}></script>#}
+{% endblock %}
+
+{% block onload %}"OnloadProductDetail()"{% endblock %}
+{% block section1 %}
+        <div style="display: none" id="jsonData-id" data-json="{{ movie.id }}"></div>
+        <div style="display: none" id="jsonData-name" data-json="{{ movie.name }}"></div>
+        <div style="display: none" id="jsonData-price" data-json="{{ movie.director }}"></div>
+
+{#        <div class="row">#}
+{#            <div class="col" style="margin: 10px">#}
+{#                <div class="col-1">#}
+{##}
+{#                    <form id="form" method="post">{% csrf_token %}#}
+{#                        {% if product.leftovers %}#}
+                            {#                            <div style="display: none" id="jsonData-id" data-json="{{ product.id }}"></div>#}
+{#                            <input type="hidden" name="products" value={{ product.id }}>#}
+{#                            <button style="color: #26d63b" type="button" id="addToCartBtn"><i#}
+{#                                    class="fa fa-shopping-basket"></i>#}
+{#                            </button>#}
+{#                        {% else %}#}
+{#                            <p>{% trans 'Lack of inventory' %}</p>#}
+{#                        {% endif %}#}
+{#                        <br>#}
+{#                    </form>#}
+{##}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#        </div>#}
+    <center>
+
+        <div class="row" style="">
+            <div class="col-12 col-md-12">
+                <h2>{% trans 'Movie Name:' %} {{ movie.name }}</h2>
+                <br>
+                <p>{% trans 'Movie Director:' %} {{ movie.director }}</p>
+                <br>
+            </div>
+        </div>
+        {% if movie.description %}
+            <div class="row">
+                <div class="col">
+                    <h3>{% trans 'Description' %}</h3>
+                    <p>{{ movie.description }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </center>
+{% endblock %}
+
