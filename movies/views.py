@@ -61,7 +61,10 @@ def movie_detail(request, pk):
     comments = movie.comments.all()
     new_comment = None
     comment_form = CommentForm()
-    rating = round(movie.comments.all().aggregate(Avg('rating'))['rating__avg'], 2)
+    if movie.comments.all():
+        rating = round(movie.comments.all().aggregate(Avg('rating'))['rating__avg'], 2)
+    else:
+        rating = 'no rating'
     if request.method == 'POST':
         print(1)
         # user_comment = get_object_or_404(Comment, user=user, movie=movie)
