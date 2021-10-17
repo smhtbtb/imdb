@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 
-class movie(models.Model):
+class Movie(models.Model):
     """
     model of movies
     """
