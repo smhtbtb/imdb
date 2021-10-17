@@ -27,12 +27,12 @@ def register(request):
         if form.is_valid():
             form.save()
             email = form.cleaned_data.get('email')
-            phone = form.cleaned_data.get('phone')
+            username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            account = authenticate(phone=phone, password=raw_password)
+            account = authenticate(username=username, password=raw_password)
             login(request, account)
 
-            return redirect('customer:baseview')
+            return redirect('movies:movie_index_view')
         else:
             context['registration_form'] = form
     elif request.method == 'GET':
