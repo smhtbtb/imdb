@@ -123,6 +123,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -150,6 +154,6 @@ CELERY_TIMEZONE = 'Europe/London'
 CELERY_BEAT_SCHEDULE = {
     "sample_task": {
         "task": "sendemail.tasks.schedule_mail",
-        "schedule": crontab(minute='*/1'),
+        "schedule": crontab(minute=0, hour=0),  # Execute daily at midnight.
     },
 }
